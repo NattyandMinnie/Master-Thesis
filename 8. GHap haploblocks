@@ -1,3 +1,4 @@
+# Filename:: ~/filepath/ghap_all.R
 # Haplotype Statistics with GHap
 ## Loading packages
 library(GHap)
