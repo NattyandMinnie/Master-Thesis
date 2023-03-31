@@ -1,0 +1,10 @@
+#!/bin/bash 
+
+# Calculating the Hardy-Weinberg deviations with Plink
+
+~/filepath/plink \
+--bfile ~/filepath/fjord_historical_updated  \
+--hardy \
+--nonfounders \
+--chr-set 35 \
+--out ~/filepath/plinkhwe
