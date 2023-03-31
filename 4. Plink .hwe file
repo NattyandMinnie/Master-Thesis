@@ -1,7 +1,9 @@
 #!/bin/bash 
 
-# Calculating the Hardy-Weinberg deviations with Plink
+# Load required modules
+module load plink
 
+# Calculating the Hardy-Weinberg deviations with Plink
 ~/filepath/plink \
 --bfile ~/filepath/fjord_historical_updated  \
 --hardy \
