@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Load required modules (if applicable)
+# Load required modules
 module load plink
 
 # Run plink to update SNP positions
-plink \
---file ~/Masterproject/Data/fjord_historical \
+~/filepath/plink \
+--file ~/filepath/fjord_historical \
 --chr-set 35 \
---update-chr ~/Masterproject/Data/snp_chr.txt \
---update-map ~/Masterproject/Data/snp_pos.txt \
+--update-chr ~/filepath/snp_chr.txt \
+--update-map ~/filepath/snp_pos.txt \
 --make-bed \
---out ~/Masterproject/Data/fjord_historical_updated
+--out ~/filepath/fjord_historical_updated
