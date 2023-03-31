@@ -1,0 +1,10 @@
+## Making GHap files from Shapeit phased dataset (.haps and .sample), converting oxford format files to ghap format
+haps.files = paste("Chr",1:31,".phased",".haps",sep="")
+command <- "tail -n+3 Chr1.phased.sample | cut -d' ' -f1,2 > Chr.samples" 
+system(command)
+for(i in 1:31){
+  command <- paste("cat",haps.files[i],"| cut -d' ' -f1-5 >> Chr.markers")
+  system(command)
+  command <- paste("cat",haps.files[i],"| cut -d' ' -f1-5 --complement >> Chr.phase")
+  system(command)
+}
