@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Load required modules
+module load plink
+
 # Separating the data on each separate chromosome as ShapeIT requires
 
 for chr in $(seq 1 35); do
