@@ -1,8 +1,10 @@
 
 #!/bin/bash
 
-# Quality control of the dataset with plink
+# Load required modules
+module load plink
 
+# Quality control of the dataset with plink
 ~/Programs/plink \
 --bfile ~/Masterproject/Data/fjord_historical_updated \
 --make-bed \
