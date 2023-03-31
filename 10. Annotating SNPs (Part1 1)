@@ -1,0 +1,66 @@
+# filename: "Annotation_allchr"
+
+library(tidyverse)
+setwd("~/filepath/")
+
+# Annotation
+read_delim("~/filepath/hapstats150") -> hapstats150
+read_delim("~/filepath/hapstats100") -> hapstats100
+read_delim("~/filepath/hapstats60") -> hapstats60
+read_delim("~/filepath/hapstats20") -> hapstats20
+read_delim("~/filepath/hapstats5") -> hapstats5
+read_delim("~/filepath//hapstats1") -> hapstats1
+
+# Adjusting p-values for multiple testing
+p.adjust(hapstats1$P, method = "bonferroni") -> hapstats1$Padj
+p.adjust(hapstats5$P, method = "bonferroni") -> hapstats5$Padj
+p.adjust(hapstats20$P, method = "bonferroni") -> hapstats20$Padj
+p.adjust(hapstats60$P, method = "bonferroni") -> hapstats60$Padj
+p.adjust(hapstats100$P, method = "bonferroni") -> hapstats100$Padj
+p.adjust(hapstats150$P, method = "bonferroni") -> hapstats150$Padj
+
+# Filtering the haploblocks on Observed homozygosity and the adjusted P-value.
+hapstats150 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats150
+hapstats100 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats100
+hapstats60 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats60 #2
+hapstats20 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats20 #19
+hapstats5 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats5 #22
+hapstats1 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats1 #
+rbind(hapstats150, hapstats100, hapstats60, hapstats20, hapstats5, hapstats1) -> lowannot
+
+# Reading in the .map and .hwe file from plink and joining them
+read_delim("~/filepath/fjord_historical_updated.map", delim = "\t", skip = 3) -> map
+names(map)[1] <- "CHR"
+names(map)[2] <- "SNP"
+names(map)[3] <- "Position"
+names(map)[4] <- "BP"
+map %>% mutate(SNP = str_remove(SNP, pattern = " ")) %>% mutate(BP = as.numeric(BP)) -> map
+read_table(~/filepath/plinkhwe.hwe", col_names = TRUE) -> hwe
+names(hwe)[7] <- "OHET" 
+names(hwe)[8] <- "EHET"
+hwe %>% subset(select = -c(X10)) -> hwe
+full_join(map, hwe, by = "SNP") -> hwemap.tbl
+hwemap.tbl %>% mutate(BP = as.numeric(BP)) %>%  dplyr::rename(CHR = CHR.x) -> hwemap.tbl
+
+# Filtering out the snps within the significant haploblocks
+hwemap.tbl %>% subset(CHR==27 & BP>=33720001 & BP<=33900000)-> chr27
+hwemap.tbl %>% subset(CHR==18 & BP>=74587001 & BP<=74599000)-> chr18
+hwemap.tbl %>% subset(CHR==13 & BP>=26260001 & BP<=26345000)-> chr13
+hwemap.tbl %>% subset(CHR==12 & BP>=13260001 & BP<=13600000)-> chr12
+hwemap.tbl %>% subset(CHR==12 & BP>=15720001 & BP<=15900000)-> chr12.2
+hwemap.tbl %>% subset(CHR==12 & BP>=29220001 & BP<=29320000)-> chr12.3
+hwemap.tbl %>% subset(CHR==2 & BP>=106259001 & BP<=106270000)-> chr2
+hwemap.tbl %>% subset(CHR==1 & BP>=160100001 & BP<=160119000)-> chr1
+rbind(chr27, chr12, chr12.2, chr12.3, chr13, chr1, chr2, chr18) -> chr
+
+# Sorting the dataframe, and putting the SNP variant information needed by Ensembl into one column
+chr[
+  with(chr, order(CHR, BP)),
+] -> chr
+chr %>% mutate(id = str_c(CHR, BP, ".", A1, A2, sep = " ")) %>% drop_na(A1) %>% mutate(BP = as.numeric(BP))-> chr
+write(chr$id, file = "~/filepath/ensembl_input.txt")
+
+########### ENSEMBL ANNOTATION VARIANT EFFECT PREDICTOR (VEP) ONLINE TOOL #############
+
+```
+
