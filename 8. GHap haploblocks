@@ -11,7 +11,7 @@ ghap.compress(input.file = "Chr", out.file = "Chr")
 ### Load the .phase files into environment
 phase <- ghap.loadphase(input.file = "Chr")
 
-# 150
+# 150 
 Chr.blocks.150kb <- ghap.blockgen(phase, windowsize = 700, slide = 150, unit = "kbp")
 ghap.haplotyping(phase, Chr.blocks.150kb, batchsize = 100, ncores = 8, outfile = "Chr150")
 haplo150 <- ghap.loadhaplo(hapsamples.file = "Chr150.hapsamples", hapalleles.file = "Chr150.hapalleles", hapgenotypesb.file = "Chr150.hapgenotypesb")
@@ -143,4 +143,4 @@ write_delim(high_annot1, "highannot1")
 write_delim(p_annot1, "pannot1")
 write_delim(phigh_annot1, "phighannot1")
 
-dev.off() # plots from qq and manhattan will be saved as a "Rplots.pdf"
+dev.off()
