@@ -1,0 +1,39 @@
+library(tidyverse)
+
+# Read in the file with new SNP positions(AX670K.csv), skipping the first 20 lines and removing leading/trailing whitespace
+newsnps <- read.csv("~/filepath/AX670K.csv", skip = 20, strip.white = TRUE)
+
+# Read in the plink .map file (fjord.map) as a delimited file, skipping the first 3 lines
+map <- read_delim("~/filepath/fjord.map", delim = "\t", skip = 3)
+
+# Rename the columns of map
+names(map)[1:4] <- c("CHR", "SNP", "Position", "BP")
+
+# Remove whitespace from SNP column and convert BP column to numeric
+map <- map %>% mutate(SNP = str_remove(SNP, pattern = " "), BP = as.numeric(BP)) %>% mutate(across(where(is.character), str_trim))
+
+# Extract SNP names and physical positions from newsnps
+names_positions_new <- data.frame(newsnps$Probe.Set.ID, newsnps$Physical.Position)
+
+# Extract SNP names and genetic positions from map
+names_positions_old <- data.frame(map$SNP, map$BP)
+
+# Rename columns of both data frames
+names(names_positions_old)[1] <- "SNP"
+names(names_positions_new)[1] <- "SNP"
+
+# Perform a left join on SNP name
+names_positions <- left_join(names_positions_new, names_positions_old, by = "SNP")
+
+# Remove rows with missing genetic position
+names_positions_done <- na.omit(names_positions)
+
+# Rename columns and subset to only include SNP_ID and New_Pos
+names(names_positions_done)[1:3] <- c("SNP_ID", "New_Pos", "Old_Pos")
+names_positions_done <- subset(names_positions_done, select = c(SNP_ID, New_Pos))
+
+# Replace "---" values with 0 in New_Pos column
+names_positions_done$New_Pos[names_positions_done$New_Pos == '---'] <- '0'
+
+# Write output to file
+write_delim(names_positions_done, "~/filepath/snp_pos.txt", col_names = FALSE)
