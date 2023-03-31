@@ -1,0 +1,13 @@
+
+#!/bin/bash
+
+# Quality control of the dataset with plink
+
+~/Programs/plink \
+--bfile ~/Masterproject/Data/fjord_historical_updated \
+--make-bed \
+--chr-set 35 \
+--geno \
+--alleleACGT \
+--out ~/Masterproject/Data/plink_qc
+
