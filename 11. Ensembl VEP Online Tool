@@ -1,0 +1,3 @@
+# The Online Tool was used, but they provide the "commandline options" for the online analysis as shown below
+
+./vep --appris --biotype --buffer_size 5000 --check_existing --distance 5000 --mane --sift b --species equus_caballus --symbol --transcript_version --tsl --cache --input_file [input_data] --output_file [output_file]
