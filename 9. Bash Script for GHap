@@ -1,0 +1,11 @@
+#!/bin/bash
+
+## Set environment and load modules ##
+
+module load R/4.1.0
+
+## Do some work ##
+
+# Rscript ~/filepath/ghap_all.R
+
+
