@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Load required modules
+load module shapeit
+
+# Phasing with SHAPEIT
+for chr in $(seq 1 35); do
+~/Programs/shapeit \
+--input-ped ~/filepath/plink.chr$chr.ped ~/filepath/plink.chr$chr.map \
+--output-max ~/filepath/Chr$chr.phased.haps ~/filepath/Chr$chr.phased.sample ;
+done
