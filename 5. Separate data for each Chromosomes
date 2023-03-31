@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Separating the data on each separate chromosome as ShapeIT requires
+
+for chr in $(seq 1 35); do
+~/Programs/plink \
+--bfile ~/Masterproject/Collected/Out/plink_qc \
+--chr-set 35 \
+--chr $chr \
+--recode \
+--exclude ~/Masterproject/Collected/Data/remove_snps.txt \
+--out ~/Masterproject/Collected/Out/plink.chr$chr ;
+done
