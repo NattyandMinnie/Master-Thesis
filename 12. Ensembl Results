@@ -1,5 +1,6 @@
-###### RSTUDIO ######
+filename: annotation_allchr.rmd
 
+###### RSTUDIO ######
 ########### ENSEMBL ANNOTATION VARIANT EFFECT PREDICTOR (VEP) #############
 # Reading in the result from Ensembl, removing unecceray columns
 read.delim("~/filepath/ensembl_result.txt", header = TRUE, sep = "\t") %>% mutate(CHR = str_extract(Location, pattern = ".+?:")) %>% mutate(CHR = str_remove(CHR, pattern = ":")) %>% mutate(POS = str_extract(Location, pattern = "-.+"))%>% mutate(POS = str_remove(POS, pattern = "-"))-> ensmbl
