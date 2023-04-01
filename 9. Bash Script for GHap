@@ -1,3 +1,5 @@
+filename: ghap:script.ssh
+
 #!/bin/bash
 
 ## Set environment and load modules ##
