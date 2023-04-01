@@ -1,6 +1,6 @@
-###### RSTUDIO ######
-# filename: "Annotation_allchr"
+filename: annotation_allchr.rmd
 
+###### RSTUDIO ######
 library(tidyverse)
 setwd("~/filepath/")
 
