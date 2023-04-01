@@ -1,3 +1,4 @@
+filename: update_snps.ssh
 #!/bin/bash
 
 # Load required modules
