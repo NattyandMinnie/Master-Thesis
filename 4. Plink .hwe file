@@ -1,3 +1,4 @@
+filename: plink_hwe.ssh
 #!/bin/bash 
 
 # Load required modules
