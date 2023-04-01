@@ -1,5 +1,6 @@
+filename: ghap_all_reorg.R (part 2)
 ##### RSTUDIO ######
-# Filename:: ~/filepath/ghap_all.R
+
 # Haplotype Statistics with GHap
 ## Loading packages
 library(GHap)
