@@ -1,4 +1,4 @@
-
+filename: plink_qc.ssh
 #!/bin/bash
 
 # Load required modules
