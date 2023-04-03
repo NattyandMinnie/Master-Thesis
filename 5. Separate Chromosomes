@@ -5,7 +5,6 @@ filename: plink_chr.ssh
 module load plink
 
 # Separating the data on each separate chromosome as ShapeIT requires, removing the SNPs where the updatet position is a with one duplicate
-
 for chr in $(seq 1 35); do
 ~/Programs/plink \
 --bfile ~/filepath/plink_qc \
