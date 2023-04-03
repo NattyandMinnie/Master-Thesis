@@ -11,5 +11,6 @@ module load plink
 --chr-set 35 \
 --geno \
 --alleleACGT \
+--exclude plinkduplicates.dupvar \
 --out ~/Masterproject/Data/plink_qc
 
