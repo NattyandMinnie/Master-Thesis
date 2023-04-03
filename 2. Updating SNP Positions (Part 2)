@@ -1,4 +1,4 @@
-filename: update_snps.ssh
+filename: update_snps.ssh + plink_duplicates.ssh
 #!/bin/bash
 
 # Load required modules
@@ -11,4 +11,6 @@ module load plink
 --update-chr ~/filepath/snp_chr.txt \
 --update-map ~/filepath/snp_pos.txt \
 --make-bed \
+--list-duplicate-vars ids-only \
 --out ~/filepath/fjord_historical_updated
+
