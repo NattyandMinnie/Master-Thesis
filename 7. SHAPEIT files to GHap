@@ -1,12 +1,18 @@
-filename: ghap_all_reorg.R (part1)
-# Making GHap files from Shapeit phased dataset (.haps and .sample), converting oxford format files to ghap format in terminal
+filename: run_ghap.ssh
 
-haps.files = paste("Chr",1:31,".phased",".haps",sep="")
-command <- "tail -n+3 Chr1.phased.sample | cut -d' ' -f1,2 > Chr.samples" 
-system(command)
-for(i in 1:31){
-  command <- paste("cat",haps.files[i],"| cut -d' ' -f1-5 >> Chr.markers")
-  system(command)
-  command <- paste("cat",haps.files[i],"| cut -d' ' -f1-5 --complement >> Chr.phase")
-  system(command)
-}
+#!/bin/bash
+
+## Set environment and load modules ##
+module load R/4.1.0
+
+## Run first ghap1
+Rscript ~/Masterproject/Collected/Documents/ghap1.R
+
+## Run jobs 2-7 as separate jobs
+sbatch --job-name=ghap_haplotyping2 ~/Masterproject/Collected/Documents/run_ghap.sh 2
+sbatch --job-name=ghap_haplotyping3 ~/Masterproject/Collected/Documents/run_ghap.sh 3
+sbatch --job-name=ghap_haplotyping4 ~/Masterproject/Collected/Documents/run_ghap.sh 4
+sbatch --job-name=ghap_haplotyping5 ~/Masterproject/Collected/Documents/run_ghap.sh 5
+sbatch --job-name=ghap_haplotyping6 ~/Masterproject/Collected/Documents/run_ghap.sh 6
+sbatch --job-name=ghap_haplotyping7 ~/Masterproject/Collected/Documents/run_ghap.sh 7
+
