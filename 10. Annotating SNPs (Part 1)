@@ -1,10 +1,11 @@
 filename: annotation_allchr.rmd
 
 ###### RSTUDIO ######
+# Loading packages and setting working directory
 library(tidyverse)
 setwd("~/filepath/")
 
-# Annotation
+# Loading haplotype statistics file
 read_delim("~/filepath/hapstats150") -> hapstats150
 read_delim("~/filepath/hapstats100") -> hapstats100
 read_delim("~/filepath/hapstats60") -> hapstats60
@@ -23,13 +24,13 @@ p.adjust(hapstats150$P, method = "bonferroni") -> hapstats150$Padj
 # Filtering the haploblocks on Observed homozygosity and the adjusted P-value.
 hapstats150 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats150
 hapstats100 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats100
-hapstats60 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats60 #2
-hapstats20 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats20 #19
-hapstats5 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats5 #22
-hapstats1 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats1 #
+hapstats60 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats60
+hapstats20 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats20 
+hapstats5 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats5 
+hapstats1 %>% filter(O.HOM <= 1) %>% filter(Padj <= 1.e-3)-> hapstats1 
 rbind(hapstats150, hapstats100, hapstats60, hapstats20, hapstats5, hapstats1) -> lowannot
 
-# Reading in the .map and .hwe file from plink and joining them
+# Reading in the .map and .hwe file from plink and joining them, renaming columns, remove whitespace and remove a column without information
 read_delim("~/filepath/fjord_historical_updated.map", delim = "\t", skip = 3) -> map
 names(map)[1] <- "CHR"
 names(map)[2] <- "SNP"
@@ -41,9 +42,11 @@ names(hwe)[7] <- "OHET"
 names(hwe)[8] <- "EHET"
 hwe %>% subset(select = -c(X10)) -> hwe
 full_join(map, hwe, by = "SNP") -> hwemap.tbl
+
+# Make BP column numeric and rename a column after joining
 hwemap.tbl %>% mutate(BP = as.numeric(BP)) %>%  dplyr::rename(CHR = CHR.x) -> hwemap.tbl
 
-# Filtering out the snps within the significant haploblocks
+# Filtering out the snps within the significant haploblocks and putting them into one dataframe
 hwemap.tbl %>% subset(CHR==27 & BP>=33720001 & BP<=33900000)-> chr27
 hwemap.tbl %>% subset(CHR==18 & BP>=74587001 & BP<=74599000)-> chr18
 hwemap.tbl %>% subset(CHR==13 & BP>=26260001 & BP<=26345000)-> chr13
@@ -59,6 +62,8 @@ chr[
   with(chr, order(CHR, BP)),
 ] -> chr
 chr %>% mutate(id = str_c(CHR, BP, ".", A1, A2, sep = " ")) %>% drop_na(A1) %>% mutate(BP = as.numeric(BP))-> chr
+
+# Write the ID column needed by Ensembl out to a file
 write(chr$id, file = "~/filepath/ensembl_input.txt")
 
 ########### ENSEMBL ANNOTATION VARIANT EFFECT PREDICTOR (VEP) ONLINE TOOL #############
