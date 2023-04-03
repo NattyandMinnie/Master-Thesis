@@ -1,13 +1,3 @@
-filename: ghap:script.ssh
-
-#!/bin/bash
-
-## Set environment and load modules ##
-
-module load R/4.1.0
-
-## Do some work ##
-
-# Rscript ~/filepath/ghap_all.R
-
+# Make the files executables, to run as wanted (bash)
+chmod +x run_ghap.sh ghap2-7.sh
 
