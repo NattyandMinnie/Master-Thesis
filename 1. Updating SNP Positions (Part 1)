@@ -1,6 +1,7 @@
-filename: update_snppos_notes.Rmd
 ##### IN RSTUDIO ######
+filename: update_snppos_notes.Rmd
 
+# Load packages
 library(tidyverse)
 
 # Read in the file with new SNP positions(AX670K.csv), skipping the first 20 lines and removing leading/trailing whitespace
