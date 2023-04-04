@@ -9,7 +9,7 @@ ensmbl = subset(ensmbl, select = -c(PHENO, X.Uploaded_variation,	HGVSc, HGVSp, c
 # Filtering out the rows where there is no associated locus (column name "Gene"), grouping them, and keeping the rows that are unique
 ensmbl %>% filter(Gene != "-") -> ensmfil
 ensmfil %>% group_by(Gene) -> ensmfil
-ensmfil %>% distinct(Allele, .keep_all=TRUE) -> ensmfil
+ensmfil %>% distinct(.keep_all=TRUE) -> ensmfil
 
 # Change name of hwemap position column, make the position column in ensmfil numeric and join them to keep only the HWE info on the significant SNPs
 hwemap.tbl %>% mutate(POS = BP)-> hwemap.tbl
