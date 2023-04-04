@@ -11,6 +11,5 @@ for chr in $(seq 1 35); do
 --chr-set 35 \
 --chr $chr \
 --recode \
---exclude ~/filepath/remove_snps.txt \
 --out ~/filepath/plink.chr$chr ;
 done
