@@ -41,3 +41,19 @@ names_positions_done$New_Pos[names_positions_done$New_Pos == '---'] <- '0'
 
 # Write output to file
 write_delim(names_positions_done, "~/filepath/snp_pos.txt", col_names = FALSE)
+
+# The same is done for the chromosome numbers of the SNPs: 
+
+data.frame(newsnps$Probe.Set.ID, newsnps$Chromosome) -> names_chr_new
+data.frame(map$SNP, map$CHR) -> names_chr_old
+names(names_chr_old)[1] <- "SNP"
+names(names_chr_new)[1] <- "SNP"
+left_join(names_chr_new, names_chr_old, by="SNP") -> names_chr
+na.omit(names_chr) -> names_chr_done
+names(names_chr_done)[1] <- "SNP_ID"
+names(names_chr_done)[2] <- "New_chr"
+names(names_chr_done)[3] <- "Old_chr"
+names_chr_done = subset(names_chr_done, select = c(SNP_ID, New_chr) )
+names_chr_done$New_chr[names_chr_done$New_chr == '---'] <- '0'
+names_chr_done %>% mutate(New_chr = str_replace_all(New_chr, pattern = "NW_.+", replacement = "0")) -> names_chr_done
+#write_delim(names_chr_done, "~/Masterproject/Collected/Data/snp_chr.txt", col_names = FALSE)
