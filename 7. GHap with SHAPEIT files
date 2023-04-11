@@ -6,13 +6,13 @@ filename: run_ghap.ssh
 module load R/4.1.0
 
 ## Run first ghap1
-Rscript ~/Masterproject/Collected/Documents/ghap1.R
+Rscript ~~/Filepath/ghap1.R
 
 ## Run jobs 2-7 as separate jobs
-sbatch --job-name=ghap_haplotyping2 ~/Masterproject/Collected/Documents/run_ghap.sh 2
-sbatch --job-name=ghap_haplotyping3 ~/Masterproject/Collected/Documents/run_ghap.sh 3
-sbatch --job-name=ghap_haplotyping4 ~/Masterproject/Collected/Documents/run_ghap.sh 4
-sbatch --job-name=ghap_haplotyping5 ~/Masterproject/Collected/Documents/run_ghap.sh 5
-sbatch --job-name=ghap_haplotyping6 ~/Masterproject/Collected/Documents/run_ghap.sh 6
-sbatch --job-name=ghap_haplotyping7 ~/Masterproject/Collected/Documents/run_ghap.sh 7
+sbatch --job-name=ghap_haplotyping2 ~/Filepath/ghap2.R
+sbatch --job-name=ghap_haplotyping3 ~/Filepath/ghap3.R
+sbatch --job-name=ghap_haplotyping4 ~/Filepath/ghap4.R
+sbatch --job-name=ghap_haplotyping5 ~/Filepath/ghap5.R
+sbatch --job-name=ghap_haplotyping6 ~/Filepath/ghap6.R
+sbatch --job-name=ghap_haplotyping7 ~/Filepath/ghap7.R
 
