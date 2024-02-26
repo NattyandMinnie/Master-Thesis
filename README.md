@@ -1,5 +1,5 @@
 # Detecting-Recessive-Detrimental-Alleles
-Project where i work to detect recessive detrimental alleles in the Norwegian Fjord Horse population
+Project where i, during my Master Thesis, work to detect recessive detrimental alleles in the Norwegian Fjord Horse population
 
 The software used in this pipeline is Shapeit2;
 1. O. Delaneau, J. Marchini, The 1000 Genomes Project Consortium (2014) Integrating sequence and array data to create an improved 1000 Genomes Project haplotype reference panel. Nature Communications 5 3934
